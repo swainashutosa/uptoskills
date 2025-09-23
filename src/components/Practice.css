@@ -1,0 +1,16 @@
+.practice-container {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.practice-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.practice-container p {
+  font-size: 1.1rem;
+}
