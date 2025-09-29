@@ -72,13 +72,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full flex justify-between items-center px-6 py-4 bg-white dark:bg-black text-black dark:text-white shadow-md relative">
+    <nav className="sticky top-0 z-50 dark:border-b-2 dark:border-blue-200 mb-50 dark:bg-neutral-900
+    w-full flex justify-between items-center px-6 py-4 bg-white  text-black dark:text-white shadow-md ">
       <Link to="/" className="flex items-center space-x-2">
         <img src="/logo.png" alt="UptoSkills" className="h-14 object-contain" />
       </Link>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-6 font-semibold text-lg">
+      <div className="hidden md:flex items-center space-x-6 font-semibold text-xs lg:text-lg">
         {/* Navigation Links */}
         <div className="flex items-center space-x-6">
           <Link to="/learn" className="hover:text-orange-500 transition">

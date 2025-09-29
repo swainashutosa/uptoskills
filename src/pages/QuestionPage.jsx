@@ -166,13 +166,73 @@ export default function QuestionPage({ topic, difficulty }) {
                   <div>
                     <strong>Sample Input:</strong>
                     <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_input}
+                      {selectedQuestion.sample_input1}
                     </pre>
                   </div>
                   <div>
                     <strong>Sample Output:</strong>
                     <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_output}
+                      {selectedQuestion.sample_output1}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Input:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_input2}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Output:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_output2}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Input:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_input3}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Output:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_output3}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Input:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_input4}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Output:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_output4}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Input:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_input5}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Output:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_output5}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Input:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_input6}
+                    </pre>
+                  </div>
+                  <div>
+                    <strong>Sample Output:</strong>
+                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
+                      {selectedQuestion.sample_output6}
                     </pre>
                   </div>
                 </div>

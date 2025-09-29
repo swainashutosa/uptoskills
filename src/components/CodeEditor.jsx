@@ -43,7 +43,7 @@ export default function CodeEditor({ question }) {
     try {
       const payload = { question, code: code.trim(), language };
       const res = await axios.post(
-        "http://localhost:8000/api/v1/gemini/run-question",
+        "http://localhost:8000/app/v1/runcode/execute",
         payload,
         {
           headers: { "Content-Type": "application/json" },
