@@ -1,4 +1,11 @@
-import React, { useEffect, useState } from "react";
+// -----------------------------
+// 📄 ContestPage.jsx
+// ➤ Displays all contests in a card layout
+// ➤ Data is fetched from ContestsData.js
+// ➤ Clicking a card navigates to ContestDetails.jsx
+// -----------------------------
+
+/* import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ErrorDisplay from "../components/ErrorDisplay"; // ErrorDisplay import kiya
@@ -99,7 +106,7 @@ export default function ContestPage() {
                 <p><strong className="text-gray-300">Status:</strong> <span className={`font-semibold ${contest.status === 'Live' ? 'text-green-500' : contest.status === 'Upcoming' ? 'text-yellow-500' : 'text-red-500'}`}>{contest.status}</span></p>
                 <p><strong className="text-gray-300">Starts:</strong> {new Date(contest.start_time).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</p>
                 <p><strong className="text-gray-300">Ends:</strong> {new Date(contest.end_time).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</p>
-                {/* <p><strong className="text-gray-300">Created By:</strong> {contest.created_by}</p> */}
+                {/* <p><strong className="text-gray-300">Created By:</strong> {contest.created_by}</p> }
               </div>
               <Link 
                 to={`/contests/${contest.contest_id}`}
@@ -111,6 +118,140 @@ export default function ContestPage() {
           ))}
         </div>
       )}
+    </div>
+  );
+} */
+import React from "react";
+import { Link } from "react-router-dom";
+import contests from "../data/ContestsData"; // default import
+
+export default function ContestPage() {
+  return (
+    <div
+      style={{
+        padding: "32px",
+        background: "linear-gradient(to bottom,#0d0d0d,#1a1a1a)",
+        minHeight: "100vh",
+        color: "white",
+        fontFamily: "sans-serif",
+      }}
+    >
+      <h2
+        style={{
+          fontSize: "40px",
+          fontWeight: "bold",
+          textAlign: "center",
+          marginBottom: "40px",
+          background: "linear-gradient(90deg,#22c55e,#3b82f6)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
+      >
+        Contests
+      </h2>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          maxWidth: "1000px",
+          margin: "0 auto",
+          gap: "20px",
+        }}
+      >
+        {contests.map((contest) => (
+          <div
+            key={contest.id}
+            style={{
+              background: "#1e1e1e",
+              border: "1px solid #2d2d2d",
+              borderRadius: "16px",
+              boxShadow: "0 4px 10px rgba(0,0,0,0.5)",
+              padding: "24px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              minHeight: "460px",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "22px",
+                fontWeight: "bold",
+                background: contest.gradient || "linear-gradient(90deg,#22c55e,#3b82f6)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                marginBottom: "12px",
+              }}
+            >
+              {contest.title}
+            </h3>
+
+            <p
+              style={{
+                fontSize: "15px",
+                color: "#9ca3af",
+                marginBottom: "16px",
+              }}
+            >
+              {contest.description}
+            </p>
+
+            <img
+              src={contest.image}
+              alt={contest.title}
+              style={{
+                width: "100%",
+                height: "180px",
+                objectFit: "cover",
+                borderRadius: "10px",
+                marginBottom: "16px",
+              }}
+            />
+
+            <div
+              style={{ fontSize: "14px", color: "#d1d5db", marginBottom: "16px" }}
+            >
+              <p>
+                <strong>Status:</strong>{" "}
+                <span style={{ fontWeight: "bold", color: contest.statusColor }}>
+                  {contest.status}
+                </span>
+              </p>
+              <p>
+                <strong>Starts:</strong> {contest.starts}
+              </p>
+              <p>
+                <strong>Ends:</strong> {contest.ends}
+              </p>
+            </div>
+
+            <Link
+              to={`/contests/${contest.id}`}
+              style={{
+                display: "inline-block",
+                textAlign: "center",
+                background: contest.buttonGradient || "linear-gradient(90deg,#3b82f6,#9333ea)",
+                color: "#fff",
+                fontWeight: "bold",
+                padding: "12px 18px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                fontSize: "14px",
+                transition: "transform 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.02)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              View Contest
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

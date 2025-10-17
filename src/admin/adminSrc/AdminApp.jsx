@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import GenericPage from "./pages/GenericPage";
 import RulesRewards from "./pages/RulesRewards";
 import AddQuestions from "./pages/AddQuestions";
+import SubmitContest from "./pages/SubmitContest";
 
 // Authentication & User
 import Login from "./Authentication/Login";
@@ -56,6 +57,7 @@ function AdminApp() {
         <Route path="/logout" element={<GenericPage title="Logout" />} />
         <Route path="/rules-rewards" element={<RulesRewards />} />
         <Route path="/add-questions" element={<AddQuestions />} />
+        <Route path="/submitcontest" element={<SubmitContest />} />
       </Route>
     </Routes>
   );

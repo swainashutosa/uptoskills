@@ -16,7 +16,7 @@ const Topbar = ({ onMenuClick }) => (
           <span className="hidden sm:inline">Admin</span>
           <FaChevronDown className="w-4 h-4" />
         </button>
-        <div className="absolute mr-30 w-30 bg-white border-2 rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
+        <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-lg py-1 z-10 hidden group-hover:block">
           <Link to="/admin/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><FaUser className="mr-2" />Profile</Link>
           <Link to="/admin/settings" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><FaCog className="mr-2" />Settings</Link>
           <Link to="/admin/logout" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><FaSignOutAlt className="mr-2" />Logout</Link>

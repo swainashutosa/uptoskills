@@ -15,13 +15,13 @@ const LoginOtp = () => {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center bg-fixed"
+      className="flex justify-center items-center min-h-screen bg-cover bg-center md:bg-fixed"
         style={{ backgroundImage: `url(${bgImageOtpPage})` }}
     >
-      <div className="bg-white w-[500px] p-8 rounded-xl shadow-lg text-center">
+      <div className="bg-white w-full max-w-md p-6 md:p-8 rounded-xl shadow-lg text-center mx-4">
         <h2 className="text-2xl font-semibold text-gray-800">Authentication</h2>
 
-        <h2 className="mb-6 text-[12px] font-semibold text-green-800">
+        <h2 className="mb-6 text-xs font-semibold text-green-800">
           Enter Otp Sent to Your Email
         </h2>
 

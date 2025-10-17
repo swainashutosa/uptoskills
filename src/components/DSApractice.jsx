@@ -11,6 +11,8 @@ export default function CodeEditor({ question }) {
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
   const [overallStatus, setOverallStatus] = useState(null);
+  const [theme, setTheme] = useState("vs-dark"); // ⬅️ Added
+
 
   const languageMap = {
     python: "python",
@@ -20,14 +22,12 @@ export default function CodeEditor({ question }) {
     java: "java",
   };
 
-  // ✅ Preload starter code from question
   useEffect(() => {
     if (question?.starterCode) {
       setCode(question.starterCode);
     }
   }, [question]);
 
-  // ✅ Run Code
   const runCode = async () => {
     setLoading(true);
     setResults(null);
@@ -64,7 +64,6 @@ export default function CodeEditor({ question }) {
     }
   };
 
-  // ✅ Submit Code
   const handleSubmit = async () => {
     const storedUser = localStorage.getItem("currentUser");
     let user = null;
@@ -110,15 +109,16 @@ export default function CodeEditor({ question }) {
   };
 
   return (
-    <div className="flex flex-col bg-gray-50 dark:bg-[#0a0a0a] border border-cyan-500 dark:border-yellow-400 rounded-lg p-4 space-y-4 text-black dark:text-white transition-colors duration-300">
+    <div className="flex flex-col bg-gray-50 dark:bg-[#0a0a0a] border border-cyan-500 dark:border-yellow-400 rounded-lg p-4 space-y-4 text-black dark:text-white transition-colors duration-300 w-full">
       <Toaster />
-
+        <nav className="w-full bg-cyan-600 dark:bg-yellow-500 text-white dark:text-black px-4 py-3 flex flex-col sm:flex-row justify-between items-center shadow-lg rounded-b-lg">
+    
       {/* Top bar */}
-      <div className="flex justify-between items-center flex-shrink-0 gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 w-full">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           <label className="text-sm text-cyan-700 dark:text-yellow-300">Language:</label>
           <select
-            className="bg-gray-200 dark:bg-[#1a1a1a] border border-cyan-500 dark:border-yellow-400 text-black dark:text-white px-2 py-1 rounded"
+            className="bg-gray-200 dark:bg-[#1a1a1a] border border-cyan-500 dark:border-yellow-400 text-black dark:text-white px-2 py-1 rounded w-full sm:w-auto"
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
           >
@@ -130,11 +130,18 @@ export default function CodeEditor({ question }) {
           </select>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <button
+           onClick={() => setTheme(theme === "vs-dark" ? "light" : "vs-dark")} // ⬅️ Toggle function
+           className="px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white border border-cyan-600 dark:border-yellow-600 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+          >
+          {theme === "vs-dark" ? "🌞 Light Mode" : "🌙 Dark Mode"} {/* ⬅️ Button label */}
+        </button>
+
           <button
             onClick={runCode}
             disabled={loading}
-            className={`px-5 py-2 rounded font-medium transition ${
+            className={`px-5 py-2 rounded font-medium transition w-full sm:w-auto ${
               loading
                 ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
                 : "bg-cyan-600 hover:bg-cyan-500 dark:bg-yellow-400 dark:hover:bg-yellow-300 dark:text-black text-white"
@@ -146,7 +153,7 @@ export default function CodeEditor({ question }) {
           <button
             onClick={handleSubmit}
             disabled={submitLoading}
-            className={`px-5 py-2 rounded font-medium transition ${
+            className={`px-5 py-2 rounded font-medium transition w-full sm:w-auto ${
               submitLoading
                 ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
                 : "bg-green-600 hover:bg-green-500 dark:bg-yellow-500 dark:hover:bg-yellow-400 dark:text-black text-white"
@@ -156,29 +163,32 @@ export default function CodeEditor({ question }) {
           </button>
         </div>
       </div>
-
+      </nav>
       {/* Monaco Editor */}
-      <Editor
-        height="400px"
-        language={languageMap[language]}
-        value={code}
-        onChange={(value) => setCode(value)}
-        theme="vs-dark"
-        options={{
-          fontSize: 14,
-          minimap: { enabled: false },
-          automaticLayout: true,
-        }}
-      />
+      <div className="h-[300px] sm:h-[400px] w-full">
+        <Editor
+          height="300px"
+          className="sm:h-[400px]"
+          language={languageMap[language]}
+          value={code}
+          onChange={(value) => setCode(value)}
+          theme={theme}
+          options={{
+            fontSize: 14,
+            minimap: { enabled: false },
+            automaticLayout: true,
+          }}
+        />
+      </div>
 
       {/* Run results */}
       {results && (
-        <div className="bg-gray-100 dark:bg-[#1e1e1e] p-4 rounded border border-cyan-500 dark:border-yellow-400">
-          <div className="flex justify-between items-center mb-2">
+        <div className="bg-gray-100 dark:bg-[#1e1e1e] p-4 rounded border border-cyan-500 dark:border-yellow-400 w-full overflow-x-auto">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-2">
             <h4 className="text-lg font-semibold text-cyan-700 dark:text-yellow-400">Results</h4>
             {overallStatus && (
               <span
-                className={`px-3 py-1 rounded text-sm font-semibold ${
+                className={`px-3 py-1 rounded text-sm font-semibold whitespace-nowrap ${
                   overallStatus.includes("Success")
                     ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 border border-green-600"
                     : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300 border border-red-600"
@@ -192,14 +202,14 @@ export default function CodeEditor({ question }) {
           {results.results?.map((r, idx) => (
             <div
               key={idx}
-              className={`p-3 mb-2 rounded border flex justify-between items-center ${
+              className={`p-3 mb-2 rounded border flex flex-col sm:flex-row justify-between gap-2 ${
                 r.pass
                   ? "border-green-600 bg-green-50 dark:bg-transparent"
                   : "border-red-600 bg-red-50 dark:bg-transparent"
               }`}
             >
-              <div>
-                <p className="text-sm font-semibold">
+              <div className="w-full text-sm">
+                <p className="font-semibold">
                   Test {idx + 1}:{" "}
                   <span
                     className={
@@ -211,14 +221,14 @@ export default function CodeEditor({ question }) {
                     {r.pass ? "Passed ✅" : "Failed ❌"}
                   </span>
                 </p>
-                <p className="text-sm mt-1">
+                <p className="mt-1">
                   <strong>Expected:</strong> {r.expected}
                 </p>
-                <p className="text-sm">
+                <p>
                   <strong>Output:</strong> {r.output}
                 </p>
                 {r.explanation && (
-                  <p className="text-cyan-700 dark:text-yellow-300 text-sm mt-1">
+                  <p className="text-cyan-700 dark:text-yellow-300 mt-1">
                     💡 {r.explanation}
                   </p>
                 )}

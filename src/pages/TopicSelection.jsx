@@ -70,10 +70,10 @@ export default function TopicSelection({ setTopic, setDifficulty }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-tr dark:from-gray-900 dark:via-black dark:to-gray-900 text-black dark:text-white font-sans flex flex-col items-center justify-center px-4 sm:px-8 md:px-12 py-12 sm:py-16 gap-10">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-tr dark:from-gray-900 dark:via-black dark:to-gray-900 text-black dark:text-white font-sans flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 py-10 sm:py-14 md:py-16 gap-8 sm:gap-10">
       {/* Title */}
       <h1
-        className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-cyan-700 dark:text-yellow-400 drop-shadow-lg text-center max-w-3xl px-4"
+        className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-cyan-700 dark:text-yellow-400 drop-shadow-lg text-center max-w-3xl px-2 sm:px-4"
         style={{ fontFamily: "'Montserrat', sans-serif" }}
       >
         {selectedTopic
@@ -82,11 +82,11 @@ export default function TopicSelection({ setTopic, setDifficulty }) {
       </h1>
 
       {/* Category Buttons */}
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
         {Object.keys(topicCategories).map((category, idx) => (
           <button
             key={idx}
-            className={`px-6 py-3 rounded-2xl font-semibold text-lg transition shadow-md
+            className={`px-4 sm:px-6 py-2 sm:py-3 rounded-2xl font-semibold text-base sm:text-lg transition shadow-md
               ${
                 selectedCategory === category
                   ? "bg-cyan-500 text-white ring-2 ring-cyan-600 dark:bg-yellow-400 dark:text-black dark:ring-white"
@@ -108,29 +108,29 @@ export default function TopicSelection({ setTopic, setDifficulty }) {
       <div
         className={`w-full max-w-7xl ${
           selectedCategory
-            ? "flex flex-col lg:flex-row gap-10 items-stretch"
+            ? "flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch"
             : "flex justify-center"
         }`}
       >
         {/* Topics Section */}
         {selectedCategory ? (
-          <div className="flex-1 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-70 rounded-3xl p-8 shadow-lg backdrop-blur-sm">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-cyan-700 dark:text-yellow-400 text-center">
+          <div className="flex-1 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-70 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg backdrop-blur-sm">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-4 sm:mb-6 text-cyan-700 dark:text-yellow-400 text-center">
               {selectedCategory} Topics
             </h2>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
               {topicCategories[selectedCategory].map((topic, i) => (
                 <button
                   key={i}
-                  className={`relative overflow-hidden rounded-lg px-4 py-5 font-semibold text-sm sm:text-base md:text-lg 
+                  className={`relative overflow-hidden rounded-lg px-3 sm:px-4 py-4 sm:py-5 font-semibold text-sm sm:text-base md:text-lg 
                     bg-cyan-500 text-white shadow-md transition-all duration-200 
                     dark:bg-yellow-400 dark:text-black
                     ${
                       selectedTopic === topic
                         ? "ring-4 ring-cyan-600 dark:ring-white ring-offset-2"
                         : ""
-                    } hover:scale-110 hover:shadow-2xl`}
+                    } hover:scale-105 sm:hover:scale-110 hover:shadow-2xl`}
                   onClick={() => handleTopicSelect(topic)}
                 >
                   {topic}
@@ -140,15 +140,15 @@ export default function TopicSelection({ setTopic, setDifficulty }) {
           </div>
         ) : (
           // Quick Start Topics
-          <div className="bg-gray-100 dark:bg-gray-800 dark:bg-opacity-70 rounded-3xl p-8 shadow-lg backdrop-blur-sm">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-cyan-700 dark:text-yellow-400 tracking-wide text-center">
+          <div className="bg-gray-100 dark:bg-gray-800 dark:bg-opacity-70 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg backdrop-blur-sm w-full">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-4 sm:mb-6 text-cyan-700 dark:text-yellow-400 tracking-wide text-center">
               Quick Start DSA Topics
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
               {defaultTopics.map((topic, i) => (
                 <button
                   key={i}
-                  className="bg-cyan-500 text-white dark:bg-yellow-400 dark:text-black px-4 py-5 rounded-lg font-semibold text-base shadow-md hover:scale-110 hover:shadow-2xl transition-transform duration-200"
+                  className="bg-cyan-500 text-white dark:bg-yellow-400 dark:text-black px-3 sm:px-4 py-4 sm:py-5 rounded-lg font-semibold text-sm sm:text-base md:text-lg shadow-md hover:scale-105 sm:hover:scale-110 hover:shadow-2xl transition-transform duration-200"
                   onClick={() => handleQuickStart(topic)}
                 >
                   {topic}
@@ -160,17 +160,17 @@ export default function TopicSelection({ setTopic, setDifficulty }) {
 
         {/* Difficulty Section */}
         {selectedCategory && (
-          <div className="w-full lg:w-1/3 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-70 rounded-3xl p-8 shadow-lg backdrop-blur-sm flex flex-col items-center justify-center">
-            <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-cyan-700 dark:text-yellow-400 tracking-wide">
+          <div className="w-full lg:w-1/3 bg-gray-100 dark:bg-gray-800 dark:bg-opacity-70 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg backdrop-blur-sm flex flex-col items-center justify-center mt-6 lg:mt-0">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-4 sm:mb-6 text-cyan-700 dark:text-yellow-400 tracking-wide">
               Select Difficulty
             </h2>
 
             {selectedTopic ? (
-              <div className="flex flex-col gap-4 w-full">
+              <div className="flex flex-col gap-3 sm:gap-4 w-full">
                 {difficulties.map((difficulty, i) => (
                   <button
                     key={i}
-                    className="bg-cyan-500 text-white dark:bg-gray-700 dark:text-white px-6 py-3 rounded-full font-medium text-lg shadow-md w-full text-center hover:bg-cyan-600 dark:hover:bg-gray-600 hover:scale-105"
+                    className="bg-cyan-500 text-white dark:bg-gray-700 dark:text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-base sm:text-lg shadow-md w-full text-center hover:bg-cyan-600 dark:hover:bg-gray-600 hover:scale-105"
                     onClick={() => handleDifficultySelect(difficulty)}
                   >
                     {difficulty}
@@ -178,7 +178,7 @@ export default function TopicSelection({ setTopic, setDifficulty }) {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 italic text-center">
+              <p className="text-gray-500 dark:text-gray-400 italic text-center text-sm sm:text-base">
                 Please select a topic first
               </p>
             )}

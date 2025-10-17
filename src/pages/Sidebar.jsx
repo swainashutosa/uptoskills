@@ -1,12 +1,14 @@
-import { motion } from "framer-motion";import { LayoutDashboard, Code, Award, Settings } from "lucide-react";
+import { motion } from "framer-motion";
+import { LayoutDashboard, Code, Award, Settings } from "lucide-react";
 import DSAProgressChart from "../components/DSAProgressChart";
+import SQLProgressChart from "../components/SQLProgressChart";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
 };
 
-const Sidebar = ({ activeTab, setActiveTab, user }) => {
+const Sidebar = ({ activeTab, setActiveTab, user, onUpdateSql, showSql, onUpdateDsa }) => {
   return (
     <motion.aside variants={itemVariants} className="w-full lg:w-80 flex-shrink-0">
       <div className="space-y-6">
@@ -26,7 +28,11 @@ const Sidebar = ({ activeTab, setActiveTab, user }) => {
             </button>
           ))}
         </nav>
-        <DSAProgressChart progress={user.dsaProgress} />
+        {showSql ? (
+          <SQLProgressChart progress={user.sqlProgress} onUpdateDsa={onUpdateDsa} />
+        ) : (
+          <DSAProgressChart progress={user.dsaProgress} onUpdateSql={onUpdateSql} />
+        )}
       </div>
     </motion.aside>
   );

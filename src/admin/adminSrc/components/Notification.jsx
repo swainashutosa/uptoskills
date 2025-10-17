@@ -26,7 +26,7 @@ export default function Notification() {
 
       {/* Floating panel */}
       {open && (
-        <div className="absolute right-0 mt-3 w-80 bg-white rounded-xl shadow-xl p-4 z-50 animate-slide-in">
+        <div className="absolute right-2 top-10 w-72 max-w-xs sm:w-80 bg-white rounded-xl shadow-xl p-4 z-50">
           <h2 className="text-lg font-semibold mb-3">🔔 Notifications</h2>
           <ul className="space-y-2 text-gray-700 max-h-60 overflow-y-auto">
             {notifications.map((note, index) => (

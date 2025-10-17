@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import ProfileHeader from "./Header";
 import Sidebar from "./Sidebar";
 import TabContent from "./TabContent";
@@ -13,6 +14,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [showSqlPage, setShowSqlPage] = useState(false);
 
   const fetchUserData = async () => {
     if (!user) setLoading(true);
@@ -45,6 +47,12 @@ export default function ProfilePage() {
             medium: { solved: 29, total: 420 },
             hard: { solved: 15, total: 247 },
           },
+          sqlProgress: backendUser.sqlProgress || {
+            totalSolved: 190, totalQuestions: 1100,
+            easy: { solved: 60, total: 355 },
+            medium: { solved: 90, total: 500 },
+            hard: { solved: 40, total: 245  },
+          },
         };
         setUser(completeUser);
       } else {
@@ -60,7 +68,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return <div className="flex items-center justify-center h-screen bg-gray-950 text-white">Loading Profile...</div>;
   if (error) return <div className="flex items-center justify-center h-screen bg-gray-950 text-red-400 p-4 text-center">{error}</div>;
@@ -73,7 +81,19 @@ export default function ProfilePage() {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="relative z-10 max-w-7xl mx-auto">
         <ProfileHeader user={user} />
         <div className="flex flex-col lg:flex-row gap-8">
-          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} user={user} />
+          <Sidebar
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            user={user}
+            showSql={showSqlPage}
+            onUpdateSql={() => {
+              setUser(prev => ({ ...prev, sqlProgress: prev.sqlProgress }));
+              setShowSqlPage(true);
+            }}
+            onUpdateDsa={() => {
+              setShowSqlPage(false);
+            }}
+          />
           <main className="flex-1 min-w-0">
             <TabContent activeTab={activeTab} user={user} onUpdate={fetchUserData} />
           </main>

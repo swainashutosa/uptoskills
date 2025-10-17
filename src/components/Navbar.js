@@ -6,6 +6,9 @@ import {
   FaSun,
   FaMoon,
   FaSignInAlt,
+  FaBars,
+  FaTimes,
+  FaBell,
 } from "react-icons/fa";
 import axios from "axios";
 
@@ -16,10 +19,12 @@ const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [notificationOpen, setNotificationOpen] = useState(false);
 
+  // ✅ Dark mode applied on <html> like your original version
   useEffect(() => {
-    // ✅ Apply dark mode class on <html>, not <body>
     if (darkMode) {
       document.documentElement.classList.add("dark");
     } else {
@@ -71,33 +76,28 @@ const Navbar = () => {
     }
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
-    <nav className="sticky top-0 z-50 dark:border-b-2 dark:border-blue-200 mb-50 dark:bg-neutral-900
-    w-full flex justify-between items-center px-6 py-4 bg-white  text-black dark:text-white shadow-md ">
-      <Link to="/" className="flex items-center space-x-2">
-        <img src="/logo.png" alt="UptoSkills" className="h-14 object-contain" />
+    <nav className="sticky top-0 z-50 w-full flex justify-between items-center px-6 py-4 bg-white dark:bg-neutral-900 text-black dark:text-white shadow-md">
+      {/* Logo */}
+      <Link to="/" className="flex items-center">
+        <img
+          src="/logo.png"
+          alt="UptoSkills"
+          className="h-14 object-contain"
+        />
       </Link>
 
-      {/* Desktop Navigation */}
+      {/* Desktop Navigation (>= md) */}
       <div className="hidden md:flex items-center space-x-6 font-semibold text-xs lg:text-lg">
-        {/* Navigation Links */}
-        <div className="flex items-center space-x-6">
-          <Link to="/learn" className="hover:text-orange-500 transition">
-            Learn Coding
-          </Link>
-          <Link to="/practice" className="hover:text-orange-500 transition">
-            Practice Coding
-          </Link>
-          <Link to="/submissions" className="hover:text-orange-500 transition">
-            Submissions
-          </Link>
-          <Link to="/contests" className="hover:text-orange-500 transition">
-            Contests
-          </Link>
-          <Link to="/leaderboard" className="hover:text-orange-500 transition">
-            LeaderBoard
-          </Link>
-        </div>
+        <Link to="/learn" className="hover:text-orange-500 transition">Learn Coding</Link>
+        <Link to="/practice" className="hover:text-orange-500 transition">Practice Coding</Link>
+        <Link to="/submissions" className="hover:text-orange-500 transition">Submissions</Link>
+        <Link to="/contests" className="hover:text-orange-500 transition">Contests</Link>
+        <Link to="/leaderboard" className="hover:text-orange-500 transition">Leader Board</Link>
 
         {/* Right side controls */}
         <div className="flex items-center space-x-4">
@@ -109,7 +109,7 @@ const Navbar = () => {
             {darkMode ? <FaSun /> : <FaMoon />}
           </button>
 
-          {/* Profile Icon with Dropdown */}
+          {/* Profile Dropdown */}
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -130,44 +130,128 @@ const Navbar = () => {
 
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-md z-50">
-                {isLoggedIn && currentUser ? (
+                {isLoggedIn ? (
                   <>
-                    {/* ✅ Correct dynamic link */}
-                    <Link
-                      to={`/profile/${currentUser.username}`}
-                      onClick={() => setDropdownOpen(false)}
+                    <Link to={`/profile/${currentUser.username}`} onClick={() => setDropdownOpen(false)} className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700">Profile</Link>
+                    
+                     <button
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        setNotificationOpen(!notificationOpen);
+                      }}
                       className="block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
                     >
-                      View Profile
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200 dark:hover:bg-gray-700"
-                    >
-                      <FaSignOutAlt className="inline mr-2" />
-                      Logout
+                      <FaBell className="inline mr-2" />
+                      Notifications
+                    </button>
+                    <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200 dark:hover:bg-gray-700">
+                      <FaSignOutAlt className="inline mr-2" /> Logout
                     </button>
                   </>
                 ) : (
-                  <Link
-                    to="/login"
-                    onClick={() => setDropdownOpen(false)}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  >
-                    <FaSignInAlt className="inline mr-2" />
-                    Login
+                  <Link to="/login" onClick={() => setDropdownOpen(false)} className="block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <FaSignInAlt className="inline mr-2" /> Login
                   </Link>
                 )}
+              </div>
+            )}
+            {notificationOpen && (
+              <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-md z-50">
+                <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700 font-semibold">Notifications</div>
+                <div className="max-h-64 overflow-y-auto">
+                  <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">New submission approved</div>
+                  <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">You earned a badge</div>
+                  <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Contest starting soon</div>
+                </div>
+                <button
+                  onClick={() => setNotificationOpen(false)}
+                  className="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-center"
+                >
+                  Cancel
+                </button>
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation Placeholder */}
+      {/* Mobile Navigation (< md) */}
       <div className="md:hidden flex items-center space-x-4">
-        {/* TODO: Add mobile menu if needed */}
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="text-xl focus:outline-none hover:text-orange-500 transition p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {darkMode ? <FaSun /> : <FaMoon />}
+        </button>
+
+        <button
+          onClick={toggleMobileMenu}
+          className="text-2xl focus:outline-none hover:text-orange-500 transition"
+          aria-label="Toggle mobile menu"
+        >
+          {mobileMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-neutral-900 text-black dark:text-white shadow-md z-50">
+          <div className="flex flex-col space-y-4 px-6 py-4">
+            <Link to="/learn" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 transition">Learn</Link>
+            <Link to="/practice" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 transition">Practice</Link>
+            <Link to="/submissions" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 transition">Submissions</Link>
+            <Link to="/contests" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 transition">Contests</Link>
+            <Link to="/leaderboard" onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 transition">Leaderboard</Link>
+
+            {isLoggedIn ? (
+              <>
+                <Link to={`/profile/${currentUser.username}`} onClick={() => setMobileMenuOpen(false)} className="hover:text-orange-500 transition">Profile</Link>
+                
+                <button
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        setNotificationOpen(!notificationOpen);
+                      }}
+                      className="block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    >
+                      <FaBell className="inline mr-2" />
+                      Notifications
+                    </button>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center space-x-2 text-red-600 hover:text-orange-500 transition"
+                >
+                  <FaSignOutAlt /> <span>Logout</span>
+                </button>
+              </>
+            ) : (
+              <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="flex items-center space-x-2 hover:text-orange-500 transition">
+                <FaSignInAlt /> <span>Login</span>
+              </Link>
+            )}
+          </div>
+          {notificationOpen && (
+              <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-md z-50">
+                <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700 font-semibold">Notifications</div>
+                <div className="max-h-64 overflow-y-auto">
+                  <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">New submission approved</div>
+                  <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">You earned a badge</div>
+                  <div className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800">Contest starting soon</div>
+                </div>
+                <button
+                  onClick={() => setNotificationOpen(false)}
+                  className="w-full px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-center"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+        </div>
+      )}
     </nav>
   );
 };

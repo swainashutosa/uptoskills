@@ -23,10 +23,13 @@ export default function QuestionPage({ topic, difficulty }) {
       setQuestionsError(null);
       setSelectedQuestion(null);
       try {
-        const res = await axios.post("http://localhost:8000/api/v1/gemini/generate-questions", {
-          topic,
-          difficulty,
-        });
+        const res = await axios.post(
+          "http://localhost:8000/api/v1/gemini/generate-questions",
+          {
+            topic,
+            difficulty,
+          }
+        );
         const uniqueQuestions = res.data.filter(
           (q, index, self) =>
             index === self.findIndex((x) => x.title.trim() === q.title.trim())
@@ -48,7 +51,7 @@ export default function QuestionPage({ topic, difficulty }) {
       setBackConfirm(true);
       toast.error("Click again to go back 👈", {
         position: "top-center",
-        style: { background: "#1f2937", color: "#fff" },
+        style: { background: "#1f2937", color: "#fff", marginTop: "30px" },
         duration: 2000,
       });
       setTimeout(() => setBackConfirm(false), 2000);
@@ -82,7 +85,9 @@ export default function QuestionPage({ topic, difficulty }) {
         } lg:translate-x-0`}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-cyan-700 dark:text-yellow-400">DSA Questions</h2>
+          <h2 className="text-xl font-bold text-cyan-700 dark:text-yellow-400">
+            DSA Questions
+          </h2>
           <button
             onClick={handleBack}
             className="bg-cyan-500 hover:bg-cyan-600 text-white dark:bg-yellow-400 dark:hover:bg-yellow-500 dark:text-black text-xs px-3 py-1 rounded transition"
@@ -91,9 +96,16 @@ export default function QuestionPage({ topic, difficulty }) {
           </button>
         </div>
 
-        {generatingQuestions && <div className="text-gray-500 dark:text-gray-400 p-2">Generating...</div>}
+        {generatingQuestions && (
+          <div className="text-gray-500 dark:text-gray-400 p-2">
+            Generating...
+          </div>
+        )}
         {questionsError && (
-          <ErrorDisplay message={questionsError} onRetry={() => window.location.reload()} />
+          <ErrorDisplay
+            message={questionsError}
+            onRetry={() => window.location.reload()}
+          />
         )}
         {!generatingQuestions && !questionsError && (
           <ul className="space-y-2">
@@ -162,81 +174,52 @@ export default function QuestionPage({ topic, difficulty }) {
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4">
                   <strong>Constraints:</strong> {selectedQuestion.constraints}
                 </p>
-                <div className="bg-gray-200 dark:bg-[#1f2937] p-3 sm:p-4 rounded text-xs sm:text-sm text-gray-700 dark:text-gray-300 space-y-4">
-                  <div>
-                    <strong>Sample Input:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_input1}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Output:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_output1}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Input:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_input2}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Output:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_output2}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Input:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_input3}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Output:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_output3}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Input:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_input4}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Output:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_output4}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Input:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_input5}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Output:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_output5}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Input:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_input6}
-                    </pre>
-                  </div>
-                  <div>
-                    <strong>Sample Output:</strong>
-                    <pre className="bg-gray-300 dark:bg-[#111827] rounded p-2 mt-1 overflow-x-auto">
-                      {selectedQuestion.sample_output6}
-                    </pre>
+
+                {/* Sample I/O */}
+
+
+                <div className="overflow-x-auto ">
+                  <div className="inline-grid grid-flow-col auto-cols-max gap-x-3 min-w-full">
+                    {/* Header Row */}
+                    <div className="flex flex-col">
+                      <div className="bg-cyan-600 dark:bg-yellow-400 text-white dark:text-black font-semibold px-4 py-2 rounded-lg">
+                        Cases
+                      </div>
+                      <div className="px-4 py-3 font-semibold text-gray-800 dark:text-gray-200">
+                        Sample Input
+                      </div>
+                      <div className="px-4 py-3 font-semibold text-gray-800 dark:text-gray-200">
+                        Sample Output
+                      </div>
+                    </div>
+
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <div key={i} className="flex flex-col">
+                        {/* Header */}
+                        <div className="bg-cyan-600 dark:bg-yellow-400 text-white dark:text-black font-semibold px-4 py-2 text-center rounded-lg">
+                          Case {i}
+                        </div>
+
+                        {/* Input */}
+                        <div className="px-4 py-3">
+                          <pre className="bg-gray-200 dark:bg-[#0f172a] p-2 rounded text-xs sm:text-sm whitespace-pre-wrap break-words">
+                            {selectedQuestion[`sample_input${i}`] || "-"}
+                          </pre>
+                        </div>
+
+                        {/* Output */}
+                        <div className="px-4 py-3">
+                          <pre className="bg-gray-200 dark:bg-[#0f172a] p-2 rounded text-xs sm:text-sm whitespace-pre-wrap break-words">
+                            {selectedQuestion[`sample_output${i}`] || "-"}
+                          </pre>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
+
+
 
               <div className="flex justify-between items-center">
                 <button
@@ -259,7 +242,9 @@ export default function QuestionPage({ topic, difficulty }) {
             </>
           ) : (
             <div className="text-gray-500 dark:text-gray-400 text-center pt-10">
-              {questionsError ? "Could not load questions." : "Please select a question from the list."}
+              {questionsError
+                ? "Could not load questions."
+                : "Please select a question from the list."}
             </div>
           )}
         </main>

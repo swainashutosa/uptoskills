@@ -1,4 +1,11 @@
-import React, { useEffect, useState } from "react";
+// -----------------------------
+// 📄 ContestDetailsPage.jsx
+// ➤ Displays detailed info for a specific contest
+// ➤ Contest is fetched by ID from ContestsData.js
+// ➤ Route: /contests/:contestId
+// -----------------------------
+
+/* import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import { Book, Award, Clock, Users, Gift, Info, AlertCircle, Shield, Coins, Target } from "lucide-react"; // Import Lucide icons
@@ -314,9 +321,9 @@ export default function ContestDetailPage() {
             <Clock className="h-5 w-5 mr-3 text-red-400 flex-shrink-0" />
             <p className="flex-grow"><strong className="text-gray-300">Ends: </strong> {new Date(contest.end_time).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })}</p>
           </div>
-          {/* Remove Time Left display */}
-          {/* <p><strong>Time Left:</strong> {formatTime(timeLeft)}</p> */}
-          {/* <p className="flex items-center"><Users className="h-5 w-5 mr-2 text-blue-400" /> <strong className="text-gray-300">Created By:</strong> {contest.created_by}</p> */}
+          {/* Remove Time Left display }
+          {/* <p><strong>Time Left:</strong> {formatTime(timeLeft)}</p> }
+          {/* <p className="flex items-center"><Users className="h-5 w-5 mr-2 text-blue-400" /> <strong className="text-gray-300">Created By:</strong> {contest.created_by}</p> }
           <div className="flex items-center bg-[#282828] p-4 rounded-xl shadow-inner border border-gray-700 hover:shadow-lg transition-all duration-300">
             <Book className="h-5 w-5 mr-3 text-purple-400 flex-shrink-0" />
             <p className="flex-grow"><strong className="text-gray-300">Total Problems: </strong> {problemsSummary.totalProblems}</p>
@@ -404,6 +411,207 @@ export default function ContestDetailPage() {
         </button>
       </div>
     </div>
+    </div>
+  );
+} */
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import contests from "../data/ContestsData";
+
+export default function ContestDetails() {
+  const { contestId } = useParams();
+  const navigate = useNavigate();
+
+  const contest = contests.find((c) => c.id === contestId);
+
+  if (!contest) {
+    return <div>Contest not found</div>;
+  }
+
+  const contestEnded = contest.status.toLowerCase() === "ended";
+
+  const boxStyle = {
+    backgroundColor: "#0d0d0d",
+    padding: 6,
+    borderRadius: 4,
+    border: "1px solid #333",
+  };
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(to bottom, #000, #111)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        padding: 16,
+        fontFamily: "sans-serif",
+        color: "#fff",
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#1a1a1a",
+          borderRadius: 8,
+          padding: 12,
+          maxWidth: 440,
+          width: "100%",
+          boxShadow: "0 0 6px rgba(0,0,0,0.3)",
+          border: "1px solid #333",
+        }}
+      >
+        {/* ✅ Title ABOVE Image */}
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: 22,
+            fontWeight: "bold",
+            marginBottom: 10,
+            background: `linear-gradient(90deg, ${contest.gradientStart}, ${contest.gradientEnd})`,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            color: "transparent", // fallback color
+          }}
+        >
+          {contest.title}
+        </h1>
+
+
+
+        <img
+          src={contest.image}
+          alt="Contest"
+          style={{
+            width: "100%",
+            height: 160,
+            objectFit: "cover",
+            borderRadius: 6,
+            marginBottom: 10,
+          }}
+        />
+
+        <p
+          style={{
+            textAlign: "center",
+            marginBottom: 12,
+            fontSize: 13,
+            color: "#ccc",
+            lineHeight: 1.4,
+          }}
+        >
+          {contest.description}
+        </p>
+
+        {/* Contest Details */}
+        <div
+          style={{
+            border: "1px solid #333",
+            borderRadius: 6,
+            padding: 10,
+            marginBottom: 12,
+          }}
+        >
+          <h3
+            style={{
+              marginBottom: 8,
+              color: contest.gradientStart || "#22c55e",
+              fontSize: 14,
+              fontWeight: "bold",
+            }}
+          >
+            Contest Details
+          </h3>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 10,
+              fontSize: 11,
+            }}
+          >
+            <div
+              style={{
+                ...boxStyle,
+                border:
+                  contest.status === "Ended"
+                    ? "1px solid #ef4444"
+                    : "1px solid #22c55e",
+              }}
+            >
+              <strong>Status:</strong>{" "}
+              <span
+                style={{
+                  color: contest.status === "Ended" ? "#ef4444" : "#22c55e",
+                  fontWeight: "bold",
+                }}
+              >
+                {contest.status}
+              </span>
+            </div>
+            <div style={boxStyle}>
+              <strong>Starts:</strong> {contest.starts}
+            </div>
+            <div style={boxStyle}>
+              <strong>Ends:</strong> {contest.ends}
+            </div>
+            <div style={boxStyle}>
+              <strong>Total Problems:</strong> {contest.totalProblems}
+            </div>
+            <div style={boxStyle}>
+              <strong>Total Points:</strong> {contest.totalPoints}
+            </div>
+            <div style={boxStyle}>
+              <strong>Bonus Prizes:</strong>{" "}
+              {contest.bonusPrizes || "Top 3 get swag"}
+            </div>
+            <div style={boxStyle}>
+              <strong>Important Notes:</strong>{" "}
+              {contest.importantNotes || "Solve within 2 hour"}
+            </div>
+            <div style={boxStyle}>
+              <strong>Violation Rules:</strong>{" "}
+              {contest.violationRules || "No plagiarism"}
+            </div>
+            <div style={boxStyle}>
+              <strong>Report Rewards:</strong>{" "}
+              {contest.reportRewards || "Report bugs to earn coins"}
+            </div>
+            <div style={boxStyle}>
+              <strong>Coin Distribution:</strong>{" "}
+              {contest.coinDistribution || "100 coins per question"}
+            </div>
+            <div style={boxStyle}>
+              <strong>Max Attempts:</strong>{" "}
+              {contest.maxAttempts !== undefined ? contest.maxAttempts : 3}
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={() => navigate("/contests")}
+          disabled={contestEnded}
+          style={{
+            background: contestEnded
+              ? "#3a3a3a"
+              : `linear-gradient(to right, ${
+                  contest.gradientStart || "#22c55e"
+                }, ${contest.gradientEnd || "#3b82f6"})`,
+            color: "#fff",
+            padding: 12,
+            border: "none",
+            borderRadius: 6,
+            fontSize: 14,
+            fontWeight: "bold",
+            cursor: contestEnded ? "not-allowed" : "pointer",
+            width: "100%",
+            opacity: contestEnded ? 0.6 : 1,
+          }}
+        >
+          {contestEnded ? "Contest Ended" : "Enter Contest"}
+        </button>
+      </div>
     </div>
   );
 }

@@ -13,15 +13,15 @@ const Login = () => {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center bg-fixed"
+      className="flex justify-center items-center min-h-screen bg-cover bg-center md:bg-fixed"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <div className="bg-white w-[500px] p-8 rounded-xl shadow-lg text-center">
-        <h2 className="mb-6 text-2xl font-semibold text-gray-800">
+      <div className="bg-white w-full max-w-md rounded-xl shadow-lg text-center mx-4 sm:mx-6">
+        <h2 className="mb-6 text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800">
           Admin Login
         </h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="px-6 pb-6">
           <div className="mb-4 text-left">
             <label className="block mb-2 font-medium text-gray-700">
               Email

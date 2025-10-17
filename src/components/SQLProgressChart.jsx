@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { Briefcase, ChevronDown } from "lucide-react";
+import { Database, ChevronDown } from "lucide-react";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
 };
 
-const DSAProgressChart = ({ progress, onUpdateSql = () => {} }) => {
+const SQLProgressChart = ({ progress, onUpdateDsa = () => {} }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const safeProgress = progress || {
@@ -29,14 +29,14 @@ const DSAProgressChart = ({ progress, onUpdateSql = () => {} }) => {
       className="bg-gray-900/50 border border-gray-700/50 rounded-2xl p-4 relative"
     >
       <h2 className="text-lg font-bold mb-3 flex items-center gap-2 text-gray-200">
-        <Briefcase size={20} className="text-blue-400" /> DSA Progress
+        <Database size={20} className="text-green-400" /> SQL Progress
         <div className="ml-auto relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="p-1 rounded hover:bg-gray-700 transition-colors"
             aria-label="Toggle Progress Options"
           >
-            <ChevronDown size={20}  className="text-gray-400 hover:text-white" />
+            <ChevronDown size={20} className="text-gray-400 hover:text-white" />
           </button>
           {dropdownOpen && (
             <div className="absolute top-full right-0 mt-1 bg-gray-800 border border-gray-700 rounded-lg p-2 z-10 w-40">
@@ -44,13 +44,13 @@ const DSAProgressChart = ({ progress, onUpdateSql = () => {} }) => {
                 onClick={() => setDropdownOpen(false)}
                 className="block w-full text-left px-2 py-1 hover:bg-gray-700 text-gray-200 rounded transition-colors text-sm"
               >
-                DSA Progress
+                SQL Progress
               </button>
               <button
-                onClick={() => { onUpdateSql(); setDropdownOpen(false); }}
+                onClick={() => { onUpdateDsa(); setDropdownOpen(false); }}
                 className="block w-full text-left px-2 py-1 hover:bg-gray-700 text-gray-200 rounded transition-colors text-sm"
               >
-                SQL Progress
+                DSA Progress
               </button>
             </div>
           )}
@@ -95,4 +95,4 @@ const DSAProgressChart = ({ progress, onUpdateSql = () => {} }) => {
   );
 };
 
-export default DSAProgressChart;
+export default SQLProgressChart;

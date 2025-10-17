@@ -1,13 +1,22 @@
 import { FaUsers, FaTrophy, FaBullhorn, FaClipboardList } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+
+  const navigate = useNavigate();
+
+  const gotoCreateContest = () => {
+    navigate("/admin/create-contest");
+  };
+
+
   return (
     <div className="space-y-10">
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl p-8 shadow-lg">
         <h1 className="text-3xl font-bold">Welcome Back, Admin 👋</h1>
         <p className="mt-2 text-blue-100">Here’s an overview of your platform today.</p>
-        <button className="mt-6 bg-white text-blue-600 px-5 py-2 rounded-lg font-semibold shadow hover:bg-gray-100">
+        <button onClick={gotoCreateContest} className="mt-6 bg-white text-blue-600 px-5 py-2 rounded-lg font-semibold shadow hover:bg-gray-100">
           + Create New Contest 
         </button>
       </div>
